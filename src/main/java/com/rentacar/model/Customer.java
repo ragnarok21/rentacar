@@ -1,6 +1,5 @@
 package com.rentacar.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,7 +8,6 @@ import javax.persistence.*;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @Entity
 @Table(name = "Cliente")
 public class Customer {
@@ -24,6 +22,17 @@ public class Customer {
     private int cellphone;
     @Column
     private String email;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "CUSTOMER_CATEGORY_ID")
     private CustomerCategory category;
+
+    public Customer(){};
+
+    public Customer(String name, String rut, int cellphone, String email, CustomerCategory category){
+        this.name = name;
+        this.rut = rut;
+        this.cellphone = cellphone;
+        this.email = email;
+        this.category = category;
+    }
 }

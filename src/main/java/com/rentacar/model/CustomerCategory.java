@@ -1,19 +1,20 @@
 package com.rentacar.model;
 
 import lombok.*;
-
 import javax.persistence.*;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
 @Entity
-@Table(name = "categoria")
+@Table(name = "Categoria")
 public class CustomerCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @Column
-    @NonNull
     private String name;
+
+    public CustomerCategory(String name) {
+        this.name = name;
+    }
 }
