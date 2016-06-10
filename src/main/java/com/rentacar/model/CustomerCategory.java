@@ -7,6 +7,7 @@ import javax.persistence.*;
 @Setter
 @Entity
 @Table(name = "Categoria")
+@NoArgsConstructor
 public class CustomerCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -1,6 +1,7 @@
 package com.rentacar.model;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,6 +11,7 @@ import javax.persistence.*;
 @Table
 @Getter
 @Setter
+@AllArgsConstructor
 public class CarType {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -17,9 +19,11 @@ public class CarType {
     @Column
     private String name;
     @Column
-    private String transmitionType;
+    @Enumerated(EnumType.STRING)
+    private Transmition transmitionType;
     @Column
-    private String fuelType;
+    @Enumerated(EnumType.STRING)
+    private FuelType fuelType;
     @Column
     private int bags;
     @Column
@@ -27,7 +31,7 @@ public class CarType {
     @Column
     private int dailyPrice;
 
-    public CarType(String name, String transmitionType, String fuelType, int bags, int passengers, int dailyPrice) {
+    public CarType(String name, Transmition transmitionType, FuelType fuelType, int bags, int passengers, int dailyPrice) {
         this.name = name;
         this.transmitionType = transmitionType;
         this.fuelType = fuelType;

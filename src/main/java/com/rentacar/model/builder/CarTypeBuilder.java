@@ -1,12 +1,14 @@
 package com.rentacar.model.builder;
 
 import com.rentacar.model.CarType;
+import com.rentacar.model.FuelType;
+import com.rentacar.model.Transmition;
 
 public class CarTypeBuilder {
     private CarType carType;
     private String name;
-    private String transmitionType;
-    private String fuelType;
+    private Transmition transmitionType;
+    private FuelType fuelType;
     private int bags;
     private int passengers;
     private int dailyPrice;
@@ -16,12 +18,12 @@ public class CarTypeBuilder {
         return this;
     }
 
-    public CarTypeBuilder setTransmitionType(String transmitionType) {
+    public CarTypeBuilder setTransmitionType(Transmition transmitionType) {
         this.transmitionType = transmitionType;
         return this;
     }
 
-    public CarTypeBuilder setFuelType(String fuelType) {
+    public CarTypeBuilder setFuelType(FuelType fuelType) {
         this.fuelType = fuelType;
         return this;
     }
