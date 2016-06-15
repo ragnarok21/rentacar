@@ -1,6 +1,7 @@
 package com.rentacar.model.builder;
 
 import com.rentacar.model.Car;
+import com.rentacar.model.CarType;
 
 public class CarBuilder {
     private Car car;
@@ -9,6 +10,7 @@ public class CarBuilder {
     private String brand;
     private String licence;
     private int year;
+    private CarType carType;
 
     public CarBuilder setModel(String model){
         this.model = model;
@@ -30,8 +32,12 @@ public class CarBuilder {
         this.year = year;
         return this;
     }
+    public CarBuilder setCarType(CarType carType){
+        this.carType = carType;
+        return this;
+    }
     public Car buildCar(){
-        car = new Car(model,color,brand,licence,year);
+        car = new Car(model,color,brand,licence,year,carType);
         return car;
     }
 }

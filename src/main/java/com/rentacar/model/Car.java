@@ -22,12 +22,16 @@ public class Car {
     private String licence;
     @Column
     private int year;
+    @OneToOne
+    @JoinColumn(name = "CARTYPE_ID")
+    private CarType carType;
 
-    public Car(String model, String color, String brand, String licence, int year) {
+    public Car(String model, String color, String brand, String licence, int year,CarType carType) {
         this.model = model;
         this.color = color;
         this.brand = brand;
         this.licence = licence;
         this.year = year;
+        this.carType = carType;
     }
 }

@@ -1,12 +1,17 @@
 package com.rentacar.impl;
 
+import com.rentacar.exception.CreateErrorException;
+import com.rentacar.exception.EmptyListException;
 import com.rentacar.model.*;
 import com.rentacar.model.builder.CarBuilder;
 import com.rentacar.model.builder.CarTypeBuilder;
 import com.rentacar.model.builder.CustomerBuilder;
 import com.rentacar.service.CustomerService;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,21 +26,36 @@ public class CustomerServiceImpl implements CustomerService {
     private SessionFactory sessionFactory;
 
     @Override
-    public void addCustomer() {
-
+    public void createCustomer(Customer customer) {
         Session session = sessionFactory.getCurrentSession();
-        session.beginTransaction();
-        Customer customer = new CustomerBuilder().withName("jose").withRut("11233").withCellphone(11232).withEmail("asd@asd.com").withCustomerCategory(new CustomerCategory("sdsdsds")).build();
-        session.save(customer);
-        session.getTransaction().commit();
-        System.out.print("Successfull");
+        Transaction tx = session.beginTransaction();
+        if(exist(customer.getId())){
+            session.save(customer);
+            tx.commit();
+        }else{
+           throw new CreateErrorException("Error al crear un cliente");
+        }
     }
 
     @Override
     public List<Customer> getAllCustomer() {
         Session session = sessionFactory.getCurrentSession();
         session.beginTransaction();
-        return session.createCriteria(Customer.class).list();
+        List<Customer> list = session.createCriteria(Customer.class).list();
+        if(!list.isEmpty()){
+            return list;
+        }else{
+            throw new EmptyListException("La lista esta vacía");
+        }
+    }
+
+    @Override
+    public boolean exist(int id) {
+        Session session = sessionFactory.getCurrentSession();
+        session.beginTransaction();
+        Criteria c = session.createCriteria(Customer.class).add(Restrictions.eq("id",id));
+        Customer customer = (Customer) c.uniqueResult();
+        return customer == null;
     }
 
 
