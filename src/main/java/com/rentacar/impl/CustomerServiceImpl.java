@@ -2,15 +2,13 @@ package com.rentacar.impl;
 
 import com.rentacar.exception.CreateErrorException;
 import com.rentacar.exception.EmptyListException;
+import com.rentacar.exception.UpdateErrorException;
 import com.rentacar.model.*;
 import com.rentacar.model.builder.CarBuilder;
 import com.rentacar.model.builder.CarTypeBuilder;
 import com.rentacar.model.builder.CustomerBuilder;
 import com.rentacar.service.CustomerService;
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import org.hibernate.*;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,11 +27,12 @@ public class CustomerServiceImpl implements CustomerService {
     public void createCustomer(Customer customer) {
         Session session = sessionFactory.getCurrentSession();
         Transaction tx = session.beginTransaction();
-        if(exist(customer.getEmail())){
+        boolean customerExist = exist(customer.getEmail());
+        if(customerExist){
             session.save(customer);
             tx.commit();
         }else{
-           throw new CreateErrorException("Error al crear un cliente");
+           throw new CreateErrorException("El cliente ya existe");
         }
     }
 
@@ -47,6 +46,11 @@ public class CustomerServiceImpl implements CustomerService {
         }else{
             throw new EmptyListException("La lista esta vacía");
         }
+    }
+
+    @Override
+    public void updateCustomer(Customer customer) {
+
     }
 
     @Override

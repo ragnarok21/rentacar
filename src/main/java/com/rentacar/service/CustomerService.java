@@ -7,5 +7,6 @@ import java.util.List;
 public interface CustomerService {
     void createCustomer(Customer customer);
     List<Customer> getAllCustomer();
+    void updateCustomer(Customer customer);
     boolean exist(String email);
 }
