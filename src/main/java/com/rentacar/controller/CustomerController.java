@@ -24,7 +24,7 @@ public class CustomerController {
     @ResponseBody
     public ResponseEntity<String> addCustomer() throws CreateErrorException{
         Customer c = new Customer();
-        c.setId(2);
+        c.setEmail("rduran@nisum.com");
         try {
             customerService.createCustomer(c);
             return new ResponseEntity<String>(OK);

@@ -22,7 +22,7 @@ public class Customer {
     private String rut;
     @Column
     private int cellphone;
-    @Column
+    @Column(unique = true)
     private String email;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "CUSTOMER_CATEGORY_ID")

@@ -29,7 +29,7 @@ public class CustomerServiceImpl implements CustomerService {
     public void createCustomer(Customer customer) {
         Session session = sessionFactory.getCurrentSession();
         Transaction tx = session.beginTransaction();
-        if(exist(customer.getId())){
+        if(exist(customer.getEmail())){
             session.save(customer);
             tx.commit();
         }else{
@@ -50,10 +50,10 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public boolean exist(int id) {
+    public boolean exist(String email) {
         Session session = sessionFactory.getCurrentSession();
         session.beginTransaction();
-        Criteria c = session.createCriteria(Customer.class).add(Restrictions.eq("id",id));
+        Criteria c = session.createCriteria(Customer.class).add(Restrictions.eq("email",email));
         Customer customer = (Customer) c.uniqueResult();
         return customer == null;
     }
