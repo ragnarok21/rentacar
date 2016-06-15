@@ -22,7 +22,7 @@ public class CustomerController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<String> addCustomer() throws CreateErrorException{
+    public ResponseEntity<String> addCustomer(){
         Customer c = new Customer();
         c.setEmail("rduran@nisum.com");
         try {
