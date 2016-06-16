@@ -4,20 +4,15 @@ import com.rentacar.exception.CreateErrorException;
 import com.rentacar.exception.EmptyListException;
 import com.rentacar.exception.UpdateErrorException;
 import com.rentacar.model.*;
-import com.rentacar.model.builder.CarBuilder;
-import com.rentacar.model.builder.CarTypeBuilder;
-import com.rentacar.model.builder.CustomerBuilder;
 import com.rentacar.service.CustomerService;
 import org.hibernate.*;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
-@Transactional
 public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
@@ -26,11 +21,19 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public void createCustomer(Customer customer) {
         Session session = sessionFactory.getCurrentSession();
-        Transaction tx = session.beginTransaction();
+        Transaction tx = null;
         boolean customerExist = exist(customer.getEmail());
         if(customerExist){
-            session.save(customer);
-            tx.commit();
+            try{
+                tx = session.beginTransaction();
+                session.save(customer);
+                tx.commit();
+            }catch(HibernateException e){
+                if(tx!=null){
+                    tx.rollback();
+                    e.printStackTrace();
+                }
+            }
         }else{
            throw new CreateErrorException("El cliente ya existe");
         }

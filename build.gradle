@@ -17,6 +17,7 @@ apply plugin: 'eclipse-wtp'
 apply plugin: 'idea'
 apply plugin: 'spring-boot' 
 apply plugin: 'war'
+apply plugin: 'sonar-runner'
 
 
 war {
@@ -57,5 +58,16 @@ eclipse {
 	classpath {
 		 containers.remove('org.eclipse.jdt.launching.JRE_CONTAINER')
 		 containers 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7'
+	}
+}
+
+sonarRunner {
+	sonarProperties {
+		property "sonar.host.url", "http://localhost:9000"
+		property "sonar.jdbc.url", "jdbc:h2:tcp://localhost:9092/sonar"
+		property "sonar.jdbc.driverClassName", "com.mysql.jdbc.H2"
+		property "sonar.jdbc.username", ""
+		property "sonar.jdbc.password", ""
+		property "sonar.projectName","rentacar"
 	}
 }
