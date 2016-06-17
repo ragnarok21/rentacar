@@ -24,14 +24,16 @@ war {
 	baseName = 'rentacar'
 	version = '0.0.1-SNAPSHOT'
 }
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 repositories {
 	mavenCentral()
 	maven { url "https://repo.spring.io/snapshot" }
 	maven { url "https://repo.spring.io/milestone" }
 }
+
+defaultTasks 'build','sonarRunner','bootRun'
 
 configurations {
 	providedRuntime
@@ -45,6 +47,7 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-data-rest')
 	compile('org.springframework.boot:spring-boot-devtools')
 	compile('org.projectlombok:lombok')
+	compile("org.springframework:spring-tx")
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile (group: 'javax.el', name: 'el-api', version: '2.2.1-b03')
 	compile group: 'javax.servlet', name: 'jstl', version: '1.2'

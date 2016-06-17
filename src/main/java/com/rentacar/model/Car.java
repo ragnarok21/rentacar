@@ -14,7 +14,7 @@ public class Car {
     private int id;
     @Column
     private String model;
-    @NonNull
+    @Column
     private String color;
     @Column
     private String brand;
